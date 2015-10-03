@@ -12,7 +12,7 @@ function get1stDegree(){
   });
 
   console.log('2nd degree');
-  url2 = '';
+  url2 = '/process.php';
   // Send the data using post
   var posting = $.post( url2, { s: postlinks } );
 
