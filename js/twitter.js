@@ -1,12 +1,14 @@
 postlinks = [];
+webcount = 0;
+domains = [];
 influence2 = [];
 
 //base = {'twitter': 'amansoni',
 base = {
-    'domain' : 'name',
-    'ip' : '127.0..0.1',
-    'rank' : '5',
-    children: []
+  'domain' : 'name',
+  'ip' : '127.0..0.1',
+  'rank' : '5',
+  children: []
 };
 
 function get1stDegree(){
@@ -17,7 +19,7 @@ function get1stDegree(){
     links = $(data).find("a[href*='twitter.com']");
     $.each( links, function( key, value ) {
       $('#twitterhandles').val($('#twitterhandles').val()+ value + '\n');
-      console.log(value.href );
+      //console.log(value.href );
       postlinks.push(key = value.href);
     });
   });
@@ -25,35 +27,62 @@ function get1stDegree(){
 
 function get2ndDegree(){
   console.log('2nd degree');
-  console.log('postlinks for majestic');
-  console.log(postlinks);
 
   $.each(postlinks, function(key, value) {
     var majestic = 'http://178.62.11.44/hackference2015/process.php?url=' + value;
-    console.log(majestic );
-    count = 0;
-    childrent = [];
+    //console.log(majestic );
     $.get( majestic, function( data ) {
-      console.log(data);
+      //console.log(data);
       //links = $(data.DataTables.Results.Data).find("a[href*='twitter.com']");
+      childrent = [];
       $.each( data.DataTables.Results.Data, function( key, value ) {
-        childrent.push({'domain' :value.Domain, 'IP' : value.IP, 'rank' : value.AlexaRank});
-        $('#weblinks').val($('#weblinks').val()+ value.Domain + '\n');
-        //influence2.push(key + )
-        count++;
+        childrent.push(addToList(value.Domain, value.IP, value.AlexaRank));
       });
       var children = {'children' : childrent};
+      //console.log(children);
       $.extend( value, children );
-//      console.log(childrent);
-  //    console.log(value.children);
-  //    console.log(count);
-
     });
   });
+}
 
-  function addToList(url, source){
-      i = $.(influence2).find(url);
-      console.console.log(i);
+function get3rdDegree(){
+  console.log('3rd degree');
+  
+  $.each(domains, function(key, value) {
+    var majestic = 'http://178.62.11.44/hackference2015/process.php?url=' + value;
+    //console.log(majestic );
+    $.get( majestic, function( data ) {
+      //console.log(data);
+      //links = $(data.DataTables.Results.Data).find("a[href*='twitter.com']");
+      childrent = [];
+      $.each( data.DataTables.Results.Data, function( key, value ) {
+        childrent.push(addToList(value.Domain, value.IP, value.AlexaRank));
+      });
+      var children = {'children' : childrent};
+      //console.log(children);
+      $.extend( value, children );
+    });
+  });
+}
+
+function addToList(domain, ip, rank){
+  //console.log('addToList ' + domain +' '+ip+' '+rank);
+  i = $.inArray(domain, domains);
+  if (i == -1){
+    $('#weblinks').val($('#weblinks').val()+ domain + '\n');
+    domains.push(domain);
+    i = $.inArray(domain, domains);
+    influence2.push({'domain' : i, 'IP' : ip, 'rank' : rank});
+    //influence2.push()
   }
+  return i;
+}
 
+function sortDomains(){
+  tdomains = $.merge([],domains);
+  tdomains.sort();
+  $('#weblinks').val('');
+  $.each(tdomains, function(key, value) {
+    $('#weblinks').val($('#weblinks').val()+ value + '\n');
+  });
 }
