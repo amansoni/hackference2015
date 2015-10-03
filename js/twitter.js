@@ -1,6 +1,7 @@
 postlinks = [];
 webcount = 0;
 domains = [];
+domains3 = [];
 influence2 = [];
 
 //base = {'twitter': 'amansoni',
@@ -47,7 +48,7 @@ function get2ndDegree(){
 
 function get3rdDegree(){
   console.log('3rd degree');
-  
+
   $.each(domains, function(key, value) {
     var majestic = 'http://178.62.11.44/hackference2015/process.php?url=' + value;
     //console.log(majestic );
@@ -56,13 +57,26 @@ function get3rdDegree(){
       //links = $(data.DataTables.Results.Data).find("a[href*='twitter.com']");
       childrent = [];
       $.each( data.DataTables.Results.Data, function( key, value ) {
-        childrent.push(addToList(value.Domain, value.IP, value.AlexaRank));
+        childrent.push(addToList2(value.Domain, value.IP, value.AlexaRank));
       });
       var children = {'children' : childrent};
       //console.log(children);
       $.extend( value, children );
     });
   });
+}
+
+function addToList2(domain, ip, rank){
+  //console.log('addToList ' + domain +' '+ip+' '+rank);
+  i = $.inArray(domain, domains3);
+  if (i == -1){
+    $('#weblinks').val($('#weblinks').val() + domain + '\n');
+    domains3.push(domain);
+    i = $.inArray(domain, domains3);
+    influence2.push({'domain' : i, 'IP' : ip, 'rank' : rank});
+    //influence2.push()
+  }
+  return i;
 }
 
 function addToList(domain, ip, rank){

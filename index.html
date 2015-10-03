@@ -83,28 +83,27 @@
                         <div class="form-group">
                           <label for="groupurl">Url for group:</label>
                           <input type="text" class="form-control" id="groupurl" value="http://2015.hackference.co.uk/speakers/">
+                          <a class="btn btn-default pull-right" onclick="get3rdDegree();">3rd degree</a>
+                          <a class="btn btn-default pull-right" onclick="get2ndDegree();">2nd degree</a>
                           <a class="btn btn-default pull-right" onclick="get1stDegree();"><i class="fa fa-twitter fa-fw"></i>Get Twitter handles</a>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="form-group">
+                        <div class="form-group col-lg-5">
                           <label for="twiterhandles"><i class="fa fa-twitter fa-fw"></i> handles found... 1st degree of influence</label>
-                          <textarea class="form-control" rows="10" id="twitterhandles" value=""></textarea>
-                          <a class="btn btn-default pull-right" onclick="get2ndDegree();">2nd degree</a>
+                          <textarea class="form-control" rows="30" id="twitterhandles" value=""></textarea>
+                        </div>
+                          <div class="form-group col-lg-5 pull-right">
+                            <label for="weblinks">2nd degree of influence</label>
+                            <a class="btn btn-default pull-right" onclick="sortDomains();">Sort</a>
+                            <textarea class="form-control" rows="35" id="weblinks" value=""></textarea>
+                          </div>
                         </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-12">
-                        <div class="form-group">
-                          <label for="weblinks">2nd degree of influence</label>
-                          <a class="btn btn-default pull-right" onclick="sortDomains();">Sort</a>
-                          <textarea class="form-control" rows="10" id="weblinks" value=""></textarea>
-                          <a class="btn btn-default pull-right" onclick="get3rdDegree();">3rd degree</a>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
