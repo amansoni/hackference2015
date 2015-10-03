@@ -15,17 +15,19 @@ function get1stDegree(){
 }
 
 function get2ndDegree(){
-  console.log('postlinks' + postlinks);
   console.log('2nd degree');
-  url2 = 'process.php';
-  // Send the data using post
-  var posting = $.post( url2, { s: postlinks } );
+  console.log('postlinks for majestic');
+  console.log(postlinks);
 
-  // Put the results in a div
-  posting.done(function( data ) {
-    console.log(data);
-    var content = $( data ).find( "#content" );
-    $( "#result" ).empty().append( content );
+  $.each( postlinks, function( key, value ) {
+    var majestic = 'http://178.62.11.44/hackference2015/process.php?url=' + value;
+    console.log(majestic );
+    $.get( majestic, function( data ) {
+      console.log(data);
+      links = $(data.Domain).find("a[href*='twitter.com']");
+      console.log(links);
+
+    });
   });
 
 }
