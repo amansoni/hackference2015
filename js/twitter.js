@@ -24,6 +24,7 @@ function get1stDegree(){
       postlinks.push(key = value.href);
     });
   });
+  countTwitterLines();
 }
 
 function get2ndDegree(){
@@ -99,4 +100,13 @@ function sortDomains(){
   $.each(tdomains, function(key, value) {
     $('#weblinks').val($('#weblinks').val()+ value + '\n');
   });
+}
+
+function countTwitterLines(){
+  var text = $("#twitterhandles").val();
+  var lines = text.split(/\n/);
+  $("#countTwitter").html(lines.length);
+  text = $("#weblinks").val();
+  lines = text.split(/\n/);
+  $("#countSites").html(lines.length);
 }
