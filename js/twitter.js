@@ -1,4 +1,16 @@
 postlinks = [];
+webcount = 0;
+domains = [];
+domains3 = [];
+influence2 = [];
+
+//base = {'twitter': 'amansoni',
+base = {
+  'domain' : 'name',
+  'ip' : '127.0..0.1',
+  'rank' : '5',
+  children: []
+};
 
 function get1stDegree(){
   console.log('1st degree');
@@ -8,24 +20,93 @@ function get1stDegree(){
     links = $(data).find("a[href*='twitter.com']");
     $.each( links, function( key, value ) {
       $('#twitterhandles').val($('#twitterhandles').val()+ value + '\n');
-      console.log(value.href );
-      postlinks.push(value.href);
+      //console.log(value.href );
+      postlinks.push(key = value.href);
+    });
+  });
+  countTwitterLines();
+}
+
+function get2ndDegree(){
+  console.log('2nd degree');
+
+  $.each(postlinks, function(key, value) {
+    var majestic = 'http://178.62.11.44/hackference2015/process.php?url=' + value;
+    //console.log(majestic );
+    $.get( majestic, function( data ) {
+      //console.log(data);
+      //links = $(data.DataTables.Results.Data).find("a[href*='twitter.com']");
+      childrent = [];
+      $.each( data.DataTables.Results.Data, function( key, value ) {
+        childrent.push(addToList(value.Domain, value.IP, value.AlexaRank));
+      });
+      var children = {'children' : childrent};
+      //console.log(children);
+      $.extend( value, children );
     });
   });
 }
 
-function get2ndDegree(){
-  console.log('postlinks' + postlinks);
-  console.log('2nd degree');
-  url2 = 'process.php';
-  // Send the data using post
-  var posting = $.post( url2, { s: postlinks } );
+function get3rdDegree(){
+  console.log('3rd degree');
 
-  // Put the results in a div
-  posting.done(function( data ) {
-    console.log(data);
-    var content = $( data ).find( "#content" );
-    $( "#result" ).empty().append( content );
+  $.each(domains, function(key, value) {
+    var majestic = 'http://178.62.11.44/hackference2015/process.php?url=' + value;
+    //console.log(majestic );
+    $.get( majestic, function( data ) {
+      //console.log(data);
+      //links = $(data.DataTables.Results.Data).find("a[href*='twitter.com']");
+      childrent = [];
+      $.each( data.DataTables.Results.Data, function( key, value ) {
+        childrent.push(addToList2(value.Domain, value.IP, value.AlexaRank));
+      });
+      var children = {'children' : childrent};
+      //console.log(children);
+      $.extend( value, children );
+    });
   });
+}
 
+function addToList2(domain, ip, rank){
+  //console.log('addToList ' + domain +' '+ip+' '+rank);
+  i = $.inArray(domain, domains3);
+  if (i == -1){
+    $('#weblinks').val($('#weblinks').val() + domain + '\n');
+    domains3.push(domain);
+    i = $.inArray(domain, domains3);
+    influence2.push({'domain' : i, 'IP' : ip, 'rank' : rank});
+    //influence2.push()
+  }
+  return i;
+}
+
+function addToList(domain, ip, rank){
+  //console.log('addToList ' + domain +' '+ip+' '+rank);
+  i = $.inArray(domain, domains);
+  if (i == -1){
+    $('#weblinks').val($('#weblinks').val()+ domain + '\n');
+    domains.push(domain);
+    i = $.inArray(domain, domains);
+    influence2.push({'domain' : i, 'IP' : ip, 'rank' : rank});
+    //influence2.push()
+  }
+  return i;
+}
+
+function sortDomains(){
+  tdomains = $.merge([],domains);
+  tdomains.sort();
+  $('#weblinks').val('');
+  $.each(tdomains, function(key, value) {
+    $('#weblinks').val($('#weblinks').val()+ value + '\n');
+  });
+}
+
+function countTwitterLines(){
+  var text = $("#twitterhandles").val();
+  var lines = text.split(/\n/);
+  $("#countTwitter").html(lines.length);
+  text = $("#weblinks").val();
+  lines = text.split(/\n/);
+  $("#countSites").html(lines.length);
 }
