@@ -21,7 +21,7 @@ function get1stDegree(){
     $.each( links, function( key, value ) {
       $('#twitterhandles').val($('#twitterhandles').val()+ value + '\n');
       //console.log(value.href );
-      postlinks.push(key = value.href);
+      postlinks.push(key = 'https://twitter.com/' + value.href);
     });
   });
   countTwitterLines();

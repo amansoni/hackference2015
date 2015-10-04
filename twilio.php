@@ -1,15 +1,31 @@
 <?php
-    header("content-type: text/xml");
-    echo "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+//  header("content-type: text/xml");
 
 $file = "twitter.txt";
-$fh = fopen($file, 'a') or die("can't open file");
+
+$myfile = fopen($file, "a") or die("Unable to open file!");
 // get twitter handle from message
-$data = "@amansoni\n";
-fwrite($fh, $data);
-fclose($fh);
+$data = $_REQUEST['Body'];
+$from = $_REQUEST['From'];
+//$data = "Hey this is my username @amansoni and a little more\n";
+//$data = preg_replace('/(^|[^a-z0-9_])@([a-z0-9_]+)/i', '$1@$2', $data);
+
+preg_match_all('/@([A-Za-z0-9_]{1,15})/', $data, $usernames);
+$data = $usernames[1][0];
+fwrite($myfile, "\n". $data);
+$data = $from;
+fwrite($myfile, "\n". $data);
+
+fclose($myfile);
+
+$file = "log.txt";
+$myfile = fopen($file, "a") or die("Unable to open file!");
+$debug = var_export($_POST, true);
+fwrite($myfile, "\n". $debug);
+fclose($myfile);
 
 ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <Response>
-    <Message>Hello, Hackferencer! We've got your twitter as: <?php echo $data ?></Message>
+    <Message>Hello, Hackferencer! We got your twitter as: <?php echo $usernames[1][0] ?></Message>
 </Response>
