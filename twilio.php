@@ -26,5 +26,5 @@ fclose($myfile);
 ?>
 <?xml version="1.0" encoding="UTF-8"?>
 <Response>
-    <Message>Hello, Hackferencer! We got your twitter as: <?php echo $data ?></Message>
+    <Message>Hello, Hackferencer! We got your twitter as: <?php echo $usernames[1][0] ?></Message>
 </Response>
