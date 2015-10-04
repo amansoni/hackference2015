@@ -1,13 +1,19 @@
 <?php
-    header("content-type: text/xml");
+//  header("content-type: text/xml");
 
 $file = "twitter.txt";
 
 $myfile = fopen($file, "a") or die("Unable to open file!");
 // get twitter handle from message
-$text = $_REQUEST['Body'];
+$data = $_REQUEST['Body'];
 $from = $_REQUEST['From'];
-$data = "@amansoni\n";
+//$data = "Hey this is my username @amansoni and a little more\n";
+//$data = preg_replace('/(^|[^a-z0-9_])@([a-z0-9_]+)/i', '$1@$2', $data);
+
+preg_match_all('/@([A-Za-z0-9_]{1,15})/', $data, $usernames);
+$data = $usernames[1][0] + ', ' + $from;
+
+
 fwrite($myfile, "\n". $data);
 fclose($myfile);
 
