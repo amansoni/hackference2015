@@ -75,17 +75,16 @@
                         <div class="form-group">
                           <label for="groupurl">Url for group:</label>
                           <input type="text" class="form-control" id="groupurl" value="http://2015.hackference.co.uk/speakers/">
-                          <a class="btn btn-default pull-right" onclick="get3rdDegree();">3rd degree</a>
-                          <a class="btn btn-default pull-right" onclick="get2ndDegree();">2nd degree</a>
                           <a class="btn btn-default pull-right" onclick="countTwitterLines();">Count</a>
-                          <a class="btn btn-default pull-right" onclick="get1stDegree();"><i class="fa fa-twitter fa-fw"></i>Get Twitter handles</a>
+                          <a class="btn btn-default pull-right" onclick="get2ndDegree();">2nd degree</a>
+                          <a class="btn btn-default pull-right" onclick="get1stDegree();"><i class="fa fa-twitter fa-fw"></i> handles</a>
                         </div>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="form-group col-lg-5">
-                          <label for="twiterhandles"><i class="fa fa-twitter fa-fw"></i> handles found... 1st degree of influence</label>
+                          <label for="twiterhandles"><i class="fa fa-twitter fa-fw"></i> a degree of influence</label>
                           <textarea class="form-control" rows="30" id="twitterhandles" value=""></textarea>
                           <p id="countTwitter">0</p>
                         </div>
@@ -100,10 +99,15 @@
                 </div>
                 <a name="world"></a>
                 <div class="row">
-                    <img src="world.png" >
+                  <h1>Hackference speakers influence around the world</h1>
+                    <img src="world.jpg" >
                 </div>
                 <a name="board"></a>
                 <div class="row">
+                  <h1>Leaderboard</h1>
+                  <a class="btn btn-default pull-right" onclick="loadHandles();">Show Leaders</a>
+
+                  <textarea class="form-control" rows="30" id="leader" value=""></textarea>
 
                 </div>
                 <a name="real"></a>

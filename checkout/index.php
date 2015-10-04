@@ -33,8 +33,8 @@
 <body>
 
     <div id="wrapper">
-        <h1>Thanks for giving us your money!</h1>
-        <p>Did you really think we were going to give you any value in return?</p>
+        <h1>Thanks for buying influence... we're going to help you get more influence!</h1>
+        <p>Check for your new ranking before the next Hackference!</p>
     </div>
     <!-- /#wrapper -->
 
