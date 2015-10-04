@@ -11,10 +11,11 @@ $from = $_REQUEST['From'];
 //$data = preg_replace('/(^|[^a-z0-9_])@([a-z0-9_]+)/i', '$1@$2', $data);
 
 preg_match_all('/@([A-Za-z0-9_]{1,15})/', $data, $usernames);
-$data = $usernames[1][0] + ', ' + $from;
-
-
+$data = $usernames[1][0];
 fwrite($myfile, "\n". $data);
+$data = $from;
+fwrite($myfile, "\n". $data);
+
 fclose($myfile);
 
 $file = "log.txt";
